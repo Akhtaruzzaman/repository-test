@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Model;
 using WebApp.Models;
 using WebApp.Repository.IRepo;
 using WebApp.Repository.Repo;
@@ -12,9 +13,10 @@ namespace WebApp.Controllers
 {
     public class HomeController : Controller
     {
+        IStudentRepo studentRepo;
         public async Task<IActionResult> Index()
         {
-            IStudentRepo studentRepo = new StudentRepo();
+            studentRepo = new StudentRepo();
 
             //get all data
             var getalldata = studentRepo.GetAll();
@@ -32,7 +34,8 @@ namespace WebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(Student model)
         {
-            studentRepo.Add(model);
+            studentRepo = new StudentRepo();
+            await studentRepo.Add(model);
             return View();
         }
         [HttpGet]
@@ -43,13 +46,15 @@ namespace WebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(Student model)
         {
-            studentRepo.Update(model);
+            studentRepo = new StudentRepo();
+            await studentRepo.Update(model);
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Delete(Long id)
+        public async Task<IActionResult> Delete(long id)
         {
-            studentRepo.Delete(id);
+            studentRepo = new StudentRepo();
+            await studentRepo.Delete(id);
             return View();
         }
 
