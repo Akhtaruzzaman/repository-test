@@ -22,19 +22,37 @@ namespace WebApp.Controllers
             //get single data
             var singledata = await studentRepo.Get(1);
 
-            //modify entity data
-            singledata.Address = "Address"+Guid.NewGuid().ToString();
-            var returnresult = studentRepo.Update(singledata);
-
-            // Entity Add
-            //  studentRepo.Add(singledata);
-
-
-            // Entity Delete
-            //  studentRepo.Delete(1);
-
             return View();
         }
+        [HttpGet]
+        public async Task<IActionResult> Create()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Create(Student model)
+        {
+            studentRepo.Add(model);
+            return View();
+        }
+        [HttpGet]
+        public async Task<IActionResult> Edit()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Edit(Student model)
+        {
+            studentRepo.Update(model);
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Delete(Long id)
+        {
+            studentRepo.Delete(id);
+            return View();
+        }
+
 
         public IActionResult Privacy()
         {
